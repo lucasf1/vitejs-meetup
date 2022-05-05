@@ -7,9 +7,13 @@
 </script>
 
 {#if href}
-    <a {href}><slot /></a>
+    <a {href}>
+        <slot />
+    </a>
 {:else}
-    <button class="{mode} {color}" {type} on:click {disabled}><slot /></button>
+    <button class="{mode} {color}" {type} on:click {disabled}>
+        <slot />
+    </button>
 {/if}
 
 <style>

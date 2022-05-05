@@ -6,12 +6,28 @@
     import Button from "../UI/Button.svelte";
     import Modal from "../UI/Modal.svelte";
 
+    export let id = null;
+
     let title = "";
     let subtitle = "";
     let address = "";
     let email = "";
     let description = "";
     let imageUrl = "";
+
+    if (id) {
+        const unsubscribe = meetups.subscribe((items) => {
+            const selectedMeetup = items.find((i) => i.id === id);
+            title = selectedMeetup.title;
+            subtitle = selectedMeetup.subtitle;
+            address = selectedMeetup.address;
+            email = selectedMeetup.email;
+            description = selectedMeetup.description;
+            imageUrl = selectedMeetup.imageUrl;
+        });
+
+        unsubscribe();
+    }
 
     const dispatch = createEventDispatcher();
 
@@ -39,7 +55,11 @@
             address: address,
         };
 
-        meetups.addMeetup(meetupData);
+        if (id) {
+            meetups.updateMeetup(id, meetupData);
+        } else {
+            meetups.addMeetup(meetupData);
+        }
 
         dispatch("save");
     }
@@ -57,7 +77,7 @@
             valid={titleValid}
             validityMessage="Please enter a valid title"
             value={title}
-            on:input={(event) => (title = event.target.value)}
+            on:input={(event) => (subtitle = event.target.value)}
         />
         <TextInput
             id="subtitle"
