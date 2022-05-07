@@ -67,6 +67,11 @@
     function cancel() {
         dispatch("cancel");
     }
+
+    function deleteMeetup(){
+        meetups.removeMeetup(id);
+        dispatch("save");
+    }
 </script>
 
 <Modal title="Edit Meetup Data" on:cancel>
@@ -77,7 +82,7 @@
             valid={titleValid}
             validityMessage="Please enter a valid title"
             value={title}
-            on:input={(event) => (subtitle = event.target.value)}
+            on:input={(event) => (title = event.target.value)}
         />
         <TextInput
             id="subtitle"
@@ -126,6 +131,9 @@
         <Button type="button" on:click={submitForm} disabled={!formIsValid}
             >Save</Button
         >
+        {#if id}
+            <Button type="button" on:click={deleteMeetup}>Delete</Button>
+        {/if}
     </div>
 </Modal>
 

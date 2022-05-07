@@ -52,6 +52,12 @@ const customMeetupStore = {
 			return updatedMeetup;
 		});
 	},
+	removeMeetup: (id) => {
+
+		meetups.update(items => {
+			return items.filter(item => item.id !== id);
+		});
+	},
     toggleFavorite: (id) => {
 
         meetups.update(items => {
